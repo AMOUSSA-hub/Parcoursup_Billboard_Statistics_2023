@@ -5,6 +5,8 @@ fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?da
             for(let i = 0 ; i < nomEcole.length ; i += 1 ){
               tbody = document.querySelector("tbody")
               ecole = document.createElement("tr")
+              ecole.classList.add('level-item')
+              ecole.classList.add('subtitle')
               ecole.textContent = nomEcole[i]
               tbody.appendChild(ecole)
             }
