@@ -12,3 +12,8 @@ fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?da
             }
   })
   .catch(error => console.error(error))
+  (async function main() {
+    await riot.compile()
+  
+    riot.mount('my-tag')
+  }())
