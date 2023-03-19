@@ -1,0 +1,66 @@
+<menu>
+  <div class="column is-half box level-left">
+    <div class="control has-icons-left has-icons-right">
+      <div class="columns">
+      <input class="column input is-3-quarter" type="text" placeholder="intitulé formation"><button class="column" disabled ={!back} >> </button>
+      </div>
+      <span class="icon is-left">
+       
+        <i class="fas fa-search"></i>
+      </span>
+    </div>
+    <ul class="menu-list">
+          <li each={formation in items}>
+        <a onclick={() => console.log(formation['name'])}>{formation['name']}</a>
+        <span class="button is-primary">{formation['count']}</span>
+      </li>
+    
+    </ul>
+
+    <script>
+  export default {
+    
+      items: [], // initialisation de l'état "items"
+      back : false ,
+    onMounted() {
+
+this.Fill_List_With_Form()         
+this.Fill_List_With_Form_detailled()
+     
+    },
+
+
+    async Fill_List_With_Form() {
+  try {
+    const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=100&sort=tri&facet=session&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&timezone=Europe%2FBerlin');
+    const data = await response.json();
+    this.items = data.facet_groups[10]["facets"];
+    this.update(this.items)
+  } catch (error) {
+    console.error(error);
+  }
+},
+
+
+async Fill_List_With_Form_detailled(){
+ try {
+    const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=session&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&timezone=Europe%2FBerlin');
+    const data = await response.json();
+    this.items = data.facet_groups[15]["facets"];
+    console.log(this.items)
+    //this.update(this.items)
+  } catch (error) {
+    console.error(error);
+  }
+
+
+}
+
+
+    
+
+  }
+</script>
+
+  </div>
+</menu>
