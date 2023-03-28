@@ -3,11 +3,12 @@
 <head>
 	<title>Titre de la page</title>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/7.1.0/riot.min.js" ></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/riot/7.1.0/riot+compiler.min.js" integrity="sha512-sSGKGR9MvL0bUx3CScaBb56crXwspwDkL/JnB0IrLFQfw3uvSUlITQtsTtDZctshhv5wdwIt+qZeN8zThRF4Dw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/riot@latest/riot.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/riot@latest/riot+compiler.min.js"></script>
+    <script src="../riot/main.riot" type="riot"></script>
     <script src="../riot/menu.riot" type="riot"></script>
     <script src="../riot/mypath.riot" type="riot"></script>
     <script src="../riot/etablissement_tab.riot" type="riot"></script>
@@ -16,28 +17,24 @@
 
 <body>
       
-    
-<mypath></mypath>
- 
-<div class="columns">  
-<menu class="column"></menu> <etablissement_tab class="column"></etablissement_tab>
- 
-</div>
+   <main></main> 
 
-        <script>
+   <script>
 
-            
-          
-           riot.compile().then(() => {
+riot.compile().then(() => {
                 
-                riot.mount('menu')
-                riot.mount('mypath')
-                riot.mount('etablissement_tab')
+               
+                riot.mount('main',{az:5})
+                
+                
+                
+                
                 
             })
-           
-           
-        </script>
+
+
+   </script>
+
 
 
 </body>

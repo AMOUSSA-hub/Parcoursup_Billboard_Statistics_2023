@@ -1,0 +1,55 @@
+<main>
+<mypath path={this.path} ></mypath>
+ 
+<div class="columns">  
+<menu class="column" SendForm={this.addTab} UpdatePath={this.UpdatePath} blabla={blalba} ></menu> <etablissement_tab class="column" formation={this.form} count={this.count} ></etablissement_tab>
+ 
+</div>
+
+        <script>
+
+      
+
+            export default {
+                path :[],
+                form: "",
+                count: "",
+                onMounted(){
+                    console.log(this.props)
+                    riot.mount("menu",{UpdatePath:this.UpdatePath,SendForm:this.addTab})
+                    
+                },
+                
+
+
+                UpdatePath(p){
+                    this.path = p
+                    this.update()
+
+
+                },
+
+             addTab(form, count){
+                
+               
+                riot.mount("etablissement_tab",{formation:form,count:count})
+
+            
+
+            
+            }
+
+                
+            }
+
+            
+
+          
+
+            
+           
+           
+        </script>
+
+
+</main>

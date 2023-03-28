@@ -1,39 +1,75 @@
 <etablissement_tab>
-                <table class="table">
+
+                <table class="table" if ={this.props.formation !== ""}>
                     <thead>
                     <tr>
-                        <th><abbr title="Position">Nom</abbr></th>
+                        <th><abbr title="Nom">Nom</abbr></th>
                         <th>Ville</th>
-                        <th><abbr title="Played">Dpt</abbr></th>
-                        <th><abbr title="Won">Moyenne</abbr></th>
-                        <th><abbr title="Drawn">Selectivité</abbr></th>
+                        <th><abbr title="Departement">Dpt</abbr></th>
+                        <th><abbr title="Moyenne">Moyenne</abbr></th>
+                        <th><abbr title="Selectivite">Selectivité</abbr></th>
                     </tr>
                     </thead>
 
                     <tfoot>
                         <tr>
-                            <th><abbr title="Position">Nom</abbr></th>
+                            <th><abbr title="Nom">Nom</abbr></th>
                             <th>Ville</th>
-                            <th><abbr title="Played">Dpt</abbr></th>
-                            <th><abbr title="Won">Moyenne</abbr></th>
-                            <th><abbr title="Drawn">Selectivité</abbr></th>
+                            <th><abbr title="Departement">Dpt</abbr></th>
+                            <th><abbr title="Moyenne">Moyenne</abbr></th>
+                            <th><abbr title="Selectivite">Selectivité</abbr></th>
                         </tr>
                     </tfoot>
                     <tbody>
-                
+                    
+                <tr class="row" each={item in this.items}><td>{item.g_ea_lib_vx}</td><td>{item.ville_etab}</td><td>{item.dep}</td><td>0</td><td>0</td></tr>
                 </tbody>
                 
                 </table>
 
         <script>
     
+
+
     
     export default {
-      
-            Check(){
 
-                        console.log("reçu chez tab")
-                    }
+        items : [],
+        
+         onMounted(){
+            
+            if(this.props.formation !== "")
+            this.renderTab(this.props.formation)
+           
+         },
+      
+
+           async renderTab(form){
+            console.log(form)
+           
+
+                 if(!localStorage.getItem(form)){
+              try {
+                const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows='+this.props.count+'&sort=tri&facet=session&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&refine.fil_lib_voe_acc='+form+'&timezone=Europe%2FBerlin');
+                const data = await response.json();
+                this.items = data.records.map(elements => elements.fields)
+                console.log(this.items.length)
+                localStorage.setItem(form,JSON.stringify(this.items))
+                this.update(this.items)
+              } catch (error) {
+                console.error(error);
+              }
+      }else{
+        this.items = JSON.parse(localStorage.getItem('tab_form'))
+         console.log(this.items.length)
+        this.update(this.items)
+      }
+
+
+            }
+    
+
+
        
 
 

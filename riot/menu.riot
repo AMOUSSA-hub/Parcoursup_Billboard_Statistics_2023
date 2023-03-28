@@ -16,7 +16,7 @@
   
           <li each={item in items}>
       <div class="columns m-2">
-        <a onclick={deep === 1 ? () => this.Fill_List_With_Form_detailled(item.name) : deep === 2 ? () => Fill_With_Libelle_form(item.name): null } class="column">{item.name}</a>
+        <a onclick={deep === 1 ? () => this.Fill_List_With_Form_detailled(item.name) : deep === 2 ? () => Fill_With_Libelle_form(item.name): deep === 3 ? () => {props.SendForm(item.name,item.count);this.addtoPath(item.name,2);}: null } class="column">{item.name}</a>
         <span class="button is-primary ">{item.count}</span>
       </div>
     </li>
@@ -25,6 +25,8 @@
 
     <script>
 
+    
+
 
   export default {
     
@@ -32,8 +34,10 @@
       back : false ,
       deep : 1,
       last_form_clicked:"",
+      path : [],
     onMounted() {
-
+      console.log(this.props)
+      this.props.UpdatePath(this.path)
       this.Fill_List_With_Form() 
 
      
@@ -43,10 +47,14 @@
 
     Back(){
 
+      
       if(this.deep == 2){
         this.Fill_List_With_Form() 
         this.deep = 1
         this.update()
+        this.removeFromPath()
+        this.removeFromPath()
+        console.log("deep 2")
       }
 
 
@@ -54,6 +62,9 @@
         this.Fill_List_With_Form_detailled(this.last_form_clicked) 
         this.deep = 2
         this.update()
+        this.props.SendForm("")
+        this.removeFromPath()
+        console.log("deep 3")
       }
 
 
@@ -62,6 +73,7 @@
 
 
     async Fill_List_With_Form() {
+    
       
       this.back = false
       if(!localStorage.getItem("tab_form")){
@@ -83,6 +95,7 @@
 
     async Fill_List_With_Form_detailled(name_form){
         console.log(name_form)
+        this.addtoPath(name_form,0)
         this.last_form_clicked = name_form
             if(!localStorage.getItem(name_form)){
                     try {
@@ -111,6 +124,7 @@
 
     async Fill_With_Libelle_form(name_form){
         console.log(name_form)
+        this.addtoPath(name_form,1)
             if(!localStorage.getItem(name_form)){
                     try {                 
                       this.items = []
@@ -129,8 +143,24 @@
         this.update()
       }
 
+
+    },
+
+    addtoPath(e,rank){
+
+      this.path[rank]= e
+      this.props.UpdatePath(this.path)
+
+    },
+
+    removeFromPath(){
+      this.path.pop()
+      this.props.UpdatePath(this.path)
+
     }
 
+
+    
 
 
 
@@ -141,5 +171,5 @@
   }
 </script>
 
-  </div>
+
 </menu>
