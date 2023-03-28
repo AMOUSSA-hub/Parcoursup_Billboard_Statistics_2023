@@ -73,7 +73,8 @@
 
 
     async Fill_List_With_Form() {
-    
+
+    this.items = []
       
       this.back = false
       if(!localStorage.getItem("tab_form")){
@@ -94,6 +95,9 @@
 
 
     async Fill_List_With_Form_detailled(name_form){
+
+    this.items = []
+
         console.log(name_form)
         this.addtoPath(name_form,0)
         this.last_form_clicked = name_form
@@ -123,6 +127,9 @@
     },
 
     async Fill_With_Libelle_form(name_form){
+
+
+      this.items = []
         console.log(name_form)
         this.addtoPath(name_form,1)
             if(!localStorage.getItem(name_form)){

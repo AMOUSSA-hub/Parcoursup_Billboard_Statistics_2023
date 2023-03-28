@@ -2,7 +2,7 @@
 <mypath path={this.path} ></mypath>
  
 <div class="columns">  
-<menu class="column" SendForm={this.addTab} UpdatePath={this.UpdatePath} blabla={blalba} ></menu> <etablissement_tab class="column" formation={this.form} count={this.count} ></etablissement_tab>
+<menu class="column" SendForm={this.addTab} UpdatePath={this.UpdatePath} blabla={blalba} ></menu> <etablissement_tab class="column" formation="" count="" ></etablissement_tab>
  
 </div>
 
@@ -12,6 +12,8 @@
 
             export default {
                 path :[],
+                last_form: "",
+                
                 onMounted(){
                     console.log(this.props)
                     riot.mount("menu",{UpdatePath:this.UpdatePath,SendForm:this.addTab})
@@ -29,10 +31,12 @@
 
              addTab(form, count){
                 
+                if(form !== this.last_form){
                
-                riot.mount("etablissement_tab",{formation:form,count:count})
+                    riot.mount("etablissement_tab",{formation:form,count:count})
+                    this.last_form = form 
 
-            
+                }
 
             
             }
