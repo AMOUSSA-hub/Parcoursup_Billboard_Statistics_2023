@@ -3,7 +3,7 @@
   <div class="column is-half box level-left">
     <div class="control has-icons-left has-icons-right">
       <div class="columns">
-      <input class="column input is-3-quarter" type="text" placeholder="  Formation"><button class="column" disabled ={!back} onclick={() => Back() }  ><</button>
+      <input id="input" class="column input is-3-quarter" type="text" placeholder="  Formation" onkeyup={() => searchbar() }><button class="column" disabled ={!back} onclick={() => Back() }  ><</button>
       </div>
       <span class="icon is-left">
        
@@ -34,6 +34,7 @@
       back : false ,
       deep : 1,
       last_form_clicked:"",
+      search:"",
       path : [],
     onMounted() {
       console.log(this.props)
@@ -44,7 +45,20 @@
      
     },
 
-
+    async searchbar(){
+      var searchString = document.getElementById("input").value;
+      this.search=searchString
+      console.log(searchString);
+      
+      if(this.deep == 1){
+        this.Fill_List_With_Form()
+        this.update()
+      }
+      if(this.deep == 2){
+        this.Fill_List_With_Form_detailled()
+        this.update()
+      }
+    },
     Back(){
 
       
@@ -73,9 +87,9 @@
 
 
     async Fill_List_With_Form() {
-
+    
     this.items = []
-      
+    this.items2 = []
       this.back = false
       if(!localStorage.getItem("tab_form")){
               try {
@@ -88,8 +102,21 @@
                 console.error(error);
               }
       }else{
-        this.items = JSON.parse(localStorage.getItem('tab_form'))
-        this.update()
+        if (this.search == null){
+          this.items = JSON.parse(localStorage.getItem('tab_form'))
+          this.update()
+        }else{
+          this.items = JSON.parse(localStorage.getItem('tab_form'))
+
+              for(let i = 0 ; i < this.items.length ; i += 1 ){
+                 if (this.items[i]["name"].toLowerCase().includes(this.search.toLowerCase())){
+                   this.items2.push(this.items[i])
+                   console.log(this.items[i]["name"])
+                 }
+              }
+              this.items = this.items2
+          this.update()
+        }
       }
     },
 
@@ -97,7 +124,7 @@
     async Fill_List_With_Form_detailled(name_form){
 
     this.items = []
-
+    this.items2 = []
         console.log(name_form)
         this.addtoPath(name_form,0)
         this.last_form_clicked = name_form
@@ -111,14 +138,30 @@
                         this.items= data.facet_groups[11].facets
                          localStorage.setItem(name_form,JSON.stringify(this.items))                          
                         this.deep = 2
+                        console.log(this.items)
                         this.update()
                       } catch (error) {
                         console.error(error);
                       }
            }else{
-            this.back = true
-           this.deep = 2    
+            if (this.search == null){
+             
         this.items = JSON.parse(localStorage.getItem(name_form))
+        }else{
+          consol.log(this.items)
+          this.items = JSON.parse(localStorage.getItem(name_form))
+
+              for(let i = 0 ; i < this.items.length ; i += 1 ){
+                 if (this.items[i]["name"].toLowerCase().includes(this.search.toLowerCase())){
+                   this.items2.push(this.items[i])
+                   console.log(this.items[i]["name"])
+                 }
+              }
+              this.items = this.items2
+          
+        }
+        this.back = true
+           this.deep = 2
         this.update()
 
       }
@@ -171,7 +214,7 @@
 
 
 
-
+  
 
     
 
