@@ -1,15 +1,16 @@
 <mypath>
- 
- 
- 
- <div class="level-item has-text-centered">
+ <div class="level-item has-text-centered ts"><a>/</a>
    <div each={item in props.path}>
     <a>{item}/</a>
    </div>
            
 
         </div>
-
+ <style>
+    .ts{
+      margin-bottom:12px;
+    }
+    </style>
      <script>
 
     
@@ -17,6 +18,8 @@
 
 
     }
+
+   
   </script>
 
 

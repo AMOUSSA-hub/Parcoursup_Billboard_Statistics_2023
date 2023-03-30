@@ -1,4 +1,4 @@
-<etablissement_tab>
+<etablissement_tab class="zeubi">
 
 <div class="box has-background-light has-text-centered">
 <div class="box has-background-light has-text-centered">
@@ -23,6 +23,8 @@
                     </tr>
                     </thead>
 
+
+                   
                     <tfoot>
                         <tr>
                             <th><abbr title="Nom">Nom</abbr></th>
@@ -32,13 +34,24 @@
                             <th><abbr title="Selectivite">Selectivité</abbr></th>
                         </tr>
                     </tfoot>
-                    <tbody>
                     
                 <tr class="row" each={item in this.items}><td>{item.g_ea_lib_vx}</td><td>{item.ville_etab}</td><td>{item.dep}</td><td>{ Average(item.acc_sansmention,item.acc_ab,item.acc_b,item.acc_tb,item.acc_tbf)}</td><td>{item.taux_acces_ens}%<progress class="progress is-warning" value={item.taux_acces_ens} max="100">{item.taux_acces_ens}</progress></td></tr>
                 </tbody>
+
                 
                 </table>
-
+<style>
+.cube2{
+  width:100%;
+    display:block;
+    height: calc(100vh - 36px);
+    overflow-y: auto;
+}
+.zeubi{
+  line-height:0;
+  padding:0;
+}
+</style>
         <script>
     
 

@@ -1,7 +1,6 @@
-<menu>
+<menu class="tst">
 
-  <div class="column is-half box level-left">
-    <div class="control has-icons-left has-icons-right">
+<div class="control has-icons-left has-icons-right boite">
       <div class="columns">
       <input id="input" class="column input is-3-quarter" type="text" placeholder="  Formation" onkeyup={() => search()}><button class="column" disabled ={!back} onclick={() => Back() }  ><</button>
       </div>
@@ -10,6 +9,8 @@
         <i class="fas fa-search"></i>
       </span>
     </div>
+  <div class="column is-half box level-left cube">
+    
   
   
     <ul class="menu-list">
@@ -22,7 +23,25 @@
       </li>
   
     </ul>
+<style>
+.cube{
+  margin:12px;
+  display:block;
+    height: calc(100vh - 100px);
+    width:400px !important;
+    overflow: auto;
+}
 
+.boite{
+  width:400px;
+}
+
+.tst{
+  margin:0;
+  padding:0;
+}
+
+</style>
     <script>
 
     
