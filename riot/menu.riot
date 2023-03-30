@@ -102,7 +102,7 @@
                 console.error(error);
               }
       }else{
-        if (this.search == null){
+        if (this.search == ""){
           this.items = JSON.parse(localStorage.getItem('tab_form'))
           this.update()
         }else{
@@ -116,16 +116,17 @@
               }
               this.items = this.items2
           this.update()
+          
         }
       }
     },
 
 
     async Fill_List_With_Form_detailled(name_form){
-
+      
     this.items = []
     this.items2 = []
-        console.log(name_form)
+        console.log("tte_form")
         this.addtoPath(name_form,0)
         this.last_form_clicked = name_form
             if(!localStorage.getItem(name_form)){
@@ -136,37 +137,35 @@
                         const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=400&start=0&sort=tri&facet=session&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&refine.fili='+name_form+'&timezone=Europe%2FBerlin')
                         const data = await response.json()
                         this.items= data.facet_groups[11].facets
-                         localStorage.setItem(name_form,JSON.stringify(this.items))                          
+                        localStorage.setItem(name_form,JSON.stringify(this.items))                          
                         this.deep = 2
-                        console.log(this.items)
-                        this.update()
                       } catch (error) {
                         console.error(error);
                       }
            }else{
-            if (this.search == null){
-             
-        this.items = JSON.parse(localStorage.getItem(name_form))
-        }else{
-          consol.log(this.items)
-          this.items = JSON.parse(localStorage.getItem(name_form))
+                
 
-              for(let i = 0 ; i < this.items.length ; i += 1 ){
-                 if (this.items[i]["name"].toLowerCase().includes(this.search.toLowerCase())){
-                   this.items2.push(this.items[i])
-                   console.log(this.items[i]["name"])
-                 }
-              }
-              this.items = this.items2
-          
-        }
+                if (this.search == ""){
+                  this.items = JSON.parse(localStorage.getItem(name_form))
+                }else{
+                  this.items = JSON.parse(localStorage.getItem(name_form))
+                  console.log(this.items)
+                  for(let i = 0 ; i < this.items.length ; i += 1 ){
+                      if (this.items[i]["name"].toLowerCase().includes(this.search.toLowerCase())){
+                        this.items2.push(this.items[i])
+                        console.log(this.items[i]["name"])
+                      }
+                  }
+                  this.items = this.items2
+                }
         this.back = true
            this.deep = 2
-        this.update()
+           
+        
 
       }
 
-
+    this.update()
     },
 
     async Fill_With_Libelle_form(name_form){
