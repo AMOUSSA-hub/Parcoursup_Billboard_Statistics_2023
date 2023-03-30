@@ -3,7 +3,7 @@
   <div class="column is-half box level-left">
     <div class="control has-icons-left has-icons-right">
       <div class="columns">
-      <input class="column input is-3-quarter" type="text" placeholder="  Formation"><button class="column" disabled ={!back} onclick={() => Back() }  ><</button>
+      <input id="input" class="column input is-3-quarter" type="text" placeholder="  Formation" onkeyup={() => search()}><button class="column" disabled ={!back} onclick={() => Back() }  ><</button>
       </div>
       <span class="icon is-left">
        
@@ -14,12 +14,12 @@
   
     <ul class="menu-list">
   
-          <li each={item in items}>
-      <div class="columns m-2">
-        <a onclick={deep === 1 ? () => this.Fill_List_With_Form_detailled(item.name) : deep === 2 ? () => Fill_With_Libelle_form(item.name): deep === 3 ? () => {props.SendForm(item.name,item.count);this.addtoPath(item.name,2);}: null } class="column">{item.name}</a>
-        <span class="button is-primary ">{item.count}</span>
-      </div>
-    </li>
+      <li each={item in items}>
+        <div class="columns m-2">
+          <a onclick={deep === 1 ? () => this.Fill_List_With_Form_detailled(item.name) : deep === 2 ? () => Fill_With_Libelle_form(item.name): deep === 3 ? () => {props.SendForm(item.name,item.count);this.addtoPath(item.name,2);}: null } class="column">{item.name}</a>
+          <span class="button is-primary ">{item.count}</span>
+        </div>
+      </li>
   
     </ul>
 
@@ -31,9 +31,11 @@
   export default {
     
       items: [], 
+      items2: [],
       back : false ,
       deep : 1,
       last_form_clicked:"",
+      last_libelle:"",
       path : [],
     onMounted() {
       console.log(this.props)
@@ -42,6 +44,40 @@
 
      
      
+    },
+    
+
+
+    search(){
+      this.items2 = []
+      var searchString = document.getElementById("input").value;
+      srch = searchString
+      if(srch != ""){
+      for(let i = 0 ; i < this.items.length ; i += 1 ){
+        if(this.items[i]["name"].toLowerCase().includes(srch.toLowerCase())){
+         this.items2.push(this.items[i])
+         console.log(this.items[i]["name"])
+        }
+      }
+      this.items = this.items2
+      this.update()
+    }else{
+
+      if(this.deep == 1){
+        this.Fill_List_With_Form()
+        this.update()
+      }
+
+      if(this.deep == 2){
+        this.Fill_List_With_Form_detailled(this.last_form_clicked) 
+        this.update()
+      }
+
+      if(this.deep == 3){
+        this.Fill_With_Libelle_form(this.last_libelle)
+        this.update()
+      }
+    }
     },
 
 
@@ -128,7 +164,7 @@
 
     async Fill_With_Libelle_form(name_form){
 
-
+      this.last_libelle = name_form
       this.items = []
         console.log(name_form)
         this.addtoPath(name_form,1)
