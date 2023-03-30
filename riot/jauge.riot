@@ -1,0 +1,47 @@
+<jauge>
+<canvas id="jauge" width="200" height="50"></canvas>
+
+     <script>
+
+    
+    export default {
+
+            onMounted(){
+         var canvas = document.getElementById('jauge');
+var context = canvas.getContext('2d');
+var width = canvas.width;
+var height = canvas.height;
+var percentage = 75; // remplacer avec votre pourcentage
+var barWidth = 10;
+var barHeight = height / 2;
+
+// Dessiner la jauge
+context.beginPath();
+context.rect(0, height / 4, width, barHeight);
+context.fillStyle = '#ddd';
+context.fill();
+
+// Dessiner la partie remplie de la jauge
+context.beginPath();
+context.rect(0, height / 4, percentage / 100 * width, barHeight);
+context.fillStyle = '#6c5ce7';
+context.fill();
+
+// Dessiner les bords de la jauge
+context.beginPath();
+context.rect(0, height / 4, width, barHeight);
+context.lineWidth = 2;
+context.strokeStyle = '#333';
+context.stroke();
+
+
+            }
+
+    }
+  </script>
+
+
+
+
+
+</jauge>

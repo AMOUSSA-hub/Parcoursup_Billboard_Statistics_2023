@@ -1,6 +1,18 @@
 <etablissement_tab>
 
-                <table class="table" if ={this.props.formation !== ""}>
+<div class="box has-background-light has-text-centered">
+<div class="box has-background-light has-text-centered">
+ <nav class="level"> <div class="level-left">Moyenne des admis</div><div class="level-right">null</div></nav>
+ <nav class="level"> <div class="level-left">Nb formations</div><div class="level-right">{this.props.count}</div></nav>
+ <nav class="level"> <div class="level-left">capacité</div><div class="level-right">null</div></nav>
+  <nav class="level"> <div class="level-left">  Sélectivité (null%)  </div><div class="level-right"><progress class="progress is-warning" value="75" max="100">75%</progress></div></nav>
+  
+</div>
+
+  <jauge ></jauge><br>
+</div>
+
+                <table class="table" >
                     <thead>
                     <tr>
                         <th><abbr title="Nom">Nom</abbr></th>
@@ -22,7 +34,7 @@
                     </tfoot>
                     <tbody>
                     
-                <tr class="row" each={item in this.items}><td>{item.g_ea_lib_vx}</td><td>{item.ville_etab}</td><td>{item.dep}</td><td>{ Average(item.acc_sansmention,item.acc_ab,item.acc_b,item.acc_tb,item.acc_tbf)}</td><td>{Selectivity(item.voe_tot,item.acc_tot)}%<progress class="progress is-warning" value={Selectivity(item.voe_tot,item.acc_tot)} max="100">{Selectivity(item.voe_tot,item.acc_tot)}%</progress></td></tr>
+                <tr class="row" each={item in this.items}><td>{item.g_ea_lib_vx}</td><td>{item.ville_etab}</td><td>{item.dep}</td><td>{ Average(item.acc_sansmention,item.acc_ab,item.acc_b,item.acc_tb,item.acc_tbf)}</td><td>{item.taux_acces_ens}%<progress class="progress is-warning" value={item.taux_acces_ens} max="100">{item.taux_acces_ens}</progress></td></tr>
                 </tbody>
                 
                 </table>
@@ -86,15 +98,6 @@
 
             },
 
-            Selectivity(voe_total,adm_total){
-
-              Selectivity = ((adm_total*100)/voe_total) 
-
-            
-
-              return Selectivity.toFixed(1)
-
-            }
 
 
 
