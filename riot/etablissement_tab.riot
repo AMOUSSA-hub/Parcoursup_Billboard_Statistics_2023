@@ -36,7 +36,11 @@
 
         items : [],
         
-         onMounted(){
+         onBeforeUpdate(){
+
+          console.log(this.props)
+
+          this.items = []
             
             if(this.props.formation !== "")
             this.renderTab(this.props.formation)
@@ -45,7 +49,7 @@
       
 
            async renderTab(form){
-            console.log(form)
+            console.log(form+" construction tab")
            
 
                  if(!localStorage.getItem(form)){
@@ -55,14 +59,14 @@
                 this.items = data.records.map(elements => elements.fields)
                 console.log(this.items.length)
                 localStorage.setItem(form,JSON.stringify(this.items))
-                this.update(this.items)
               } catch (error) {
                 console.error(error);
               }
       }else{
-        this.items = JSON.parse(localStorage.getItem('tab_form'))
+        this.items = JSON.parse(localStorage.getItem(form))
          console.log(this.items.length)
-        this.update(this.items)
+         
+        
       }
 
 
