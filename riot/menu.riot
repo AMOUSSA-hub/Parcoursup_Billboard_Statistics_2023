@@ -16,7 +16,7 @@
   
       <li each={item in items}>
         <div class="columns m-2">
-          <a onclick={deep === 1 ? () => this.Fill_List_With_Form_detailled(item.name) : deep === 2 ? () => Fill_With_Libelle_form(item.name): deep === 3 ? () => {props.SendForm(item.name,item.count);this.addtoPath(item.name,2);}: null } class="column">{item.name}</a>
+          <a onclick={deep === 1 ? () => {this.Fill_List_With_Form_detailled(item.name);this.subsrch();} : deep === 2 ? () => {Fill_With_Libelle_form(item.name);this.subsrch();}: deep === 3 ? () => {props.SendForm(item.name,item.count);this.addtoPath(item.name,2);this.subsrch(); }: null} class="column">{item.name}</a>
           <span class="button is-primary ">{item.count}</span>
         </div>
       </li>
@@ -46,23 +46,13 @@
      
     },
     
+    subsrch(){
+      document.getElementById('input').value = ''
+      this.refresh()
+    },
+    
 
-
-    search(){
-      this.items2 = []
-      var searchString = document.getElementById("input").value;
-      srch = searchString
-      if(srch != ""){
-      for(let i = 0 ; i < this.items.length ; i += 1 ){
-        if(this.items[i]["name"].toLowerCase().includes(srch.toLowerCase())){
-         this.items2.push(this.items[i])
-         console.log(this.items[i]["name"])
-        }
-      }
-      this.items = this.items2
-      this.update()
-    }else{
-
+    refresh(){
       if(this.deep == 1){
         this.Fill_List_With_Form()
         this.update()
@@ -77,6 +67,24 @@
         this.Fill_With_Libelle_form(this.last_libelle)
         this.update()
       }
+    },
+
+    search(){
+      this.refresh()
+      this.items2 = []
+      var searchString = document.getElementById("input").value;
+      srch = searchString
+      if(srch != ""){
+      for(let i = 0 ; i < this.items.length ; i += 1 ){
+        if(this.items[i]["name"].toLowerCase().includes(srch.toLowerCase())){
+         this.items2.push(this.items[i])
+         console.log(this.items[i]["name"])
+        }
+      }
+      this.items = this.items2
+      this.update()
+    }else{
+      this.refresh()
     }
     },
 
@@ -102,7 +110,7 @@
         this.removeFromPath()
         console.log("deep 3")
       }
-
+      this.subsrch()
 
 
     },
