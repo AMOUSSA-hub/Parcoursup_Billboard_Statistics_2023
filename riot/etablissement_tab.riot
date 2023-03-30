@@ -1,6 +1,6 @@
 <etablissement_tab>
 
-                <table class="table" if ={this.props.formation !== ""}>
+                <table class="table cube2" if ={this.props.formation !== ""}>
                     <thead>
                     <tr>
                         <th><abbr title="Nom">Nom</abbr></th>
@@ -11,6 +11,8 @@
                     </tr>
                     </thead>
 
+
+                   
                     <tfoot>
                         <tr>
                             <th><abbr title="Nom">Nom</abbr></th>
@@ -20,13 +22,23 @@
                             <th><abbr title="Selectivite">Selectivité</abbr></th>
                         </tr>
                     </tfoot>
-                    <tbody>
                     
-                <tr class="row" each={item in this.items}><td>{item.g_ea_lib_vx}</td><td>{item.ville_etab}</td><td>{item.dep}</td><td>{ Average(item.acc_sansmention,item.acc_ab,item.acc_b,item.acc_tb,item.acc_tbf)}</td><td>{Selectivity(item.voe_tot,item.acc_tot)}%<progress class="progress is-warning" value={Selectivity(item.voe_tot,item.acc_tot)} max="100">{Selectivity(item.voe_tot,item.acc_tot)}%</progress></td></tr>
+                     <tbody>
+                    
+                <tr class="rows" each={item in this.items}><td>{item.g_ea_lib_vx}</td><td>{item.ville_etab}</td><td>{item.dep}</td><td>{ Average(item.acc_sansmention,item.acc_ab,item.acc_b,item.acc_tb,item.acc_tbf)}</td><td>{Selectivity(item.voe_tot,item.acc_tot)}%<progress class="progress is-warning" value={Selectivity(item.voe_tot,item.acc_tot)} max="100">{Selectivity(item.voe_tot,item.acc_tot)}%</progress></td></tr>
                 </tbody>
+
                 
                 </table>
+<style>
+.cube2{
+  width:100%;
+    display:block;
+    height: calc(100vh - 36px);
+    overflow-y: auto;
+}
 
+</style>
         <script>
     
 
