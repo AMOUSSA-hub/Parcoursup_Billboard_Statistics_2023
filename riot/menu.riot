@@ -150,7 +150,7 @@
                       this.back = true
                       this.items = []
                       
-                        const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=400&start=0&facet=fili&facet=form_lib_voe_acc&refine.fili='+name_form+'&timezone=Europe%2FBerlin')
+                        const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=400&start=0&facet=fili&facet=form_lib_voe_acc&refine.fili='+encodeURIComponent(name_form)+'&timezone=Europe%2FBerlin')
                         const data = await response.json()
                         this.items= data.facet_groups[1].facets
                          localStorage.setItem(name_form,JSON.stringify(this.items))                          
@@ -172,6 +172,9 @@
 
     async Fill_With_Libelle_form(name_form){
 
+
+      
+
       this.last_libelle = name_form
       this.items = []
         console.log(name_form)
@@ -179,7 +182,7 @@
             if(!localStorage.getItem(name_form)){
                     try {                 
                       this.items = []
-                        const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=400&start=0&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&refine.form_lib_voe_acc='+name_form+'&timezone=Europe%2FBerlin')
+                        const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=400&start=0&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&refine.form_lib_voe_acc='+encodeURIComponent(name_form)+'&timezone=Europe%2FBerlin')
                         const data = await response.json()
                         this.items= data.facet_groups[1].facets
                          localStorage.setItem(name_form,JSON.stringify(this.items))

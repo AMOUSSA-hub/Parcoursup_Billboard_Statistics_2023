@@ -22,7 +22,7 @@
                     </tfoot>
                     <tbody>
                     
-                <tr class="row" each={item in this.items}><td>{item.g_ea_lib_vx}</td><td>{item.ville_etab}</td><td>{item.dep}</td><td>{ Average(item.acc_sansmention,item.acc_ab,item.acc_b,item.acc_tb,item.acc_tbf)}</td><td>0</td></tr>
+                <tr class="row" each={item in this.items}><td>{item.g_ea_lib_vx}</td><td>{item.ville_etab}</td><td>{item.dep}</td><td>{ Average(item.acc_sansmention,item.acc_ab,item.acc_b,item.acc_tb,item.acc_tbf)}</td><td>{Selectivity(item.voe_tot,item.acc_tot)}%<progress class="progress is-warning" value={Selectivity(item.voe_tot,item.acc_tot)} max="100">{Selectivity(item.voe_tot,item.acc_tot)}%</progress></td></tr>
                 </tbody>
                 
                 </table>
@@ -40,6 +40,8 @@
 
           console.log(this.props)
 
+
+            console.log(this.props.formation)
         
             this.renderTab(this.props.formation)
            
@@ -48,12 +50,11 @@
       
 
            async renderTab(form){
-            console.log(form+" construction tab")
            
 
                  if(!localStorage.getItem(form)){
               try {
-                const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows='+this.props.count+'&sort=tri&facet=session&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&refine.fil_lib_voe_acc='+form+'&timezone=Europe%2FBerlin');
+                const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows='+this.props.count+'&sort=tri&facet=session&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&refine.fil_lib_voe_acc='+encodeURIComponent(form)+'&timezone=Europe%2FBerlin');
                 const data = await response.json();
                 this.items = data.records.map(elements => elements.fields)
                 console.log(this.items)
@@ -78,12 +79,20 @@
                  total = admis_SM+admis_AB+admis_B+Admis_TB+admis_F
                  average = ((admis_SM*10)+(admis_AB*12)+(admis_B*14)+(Admis_TB*16)+(admis_F+18))/total
 
-                console.log(total)
-                console.log(average)
 
            
 
-              return average;
+              return average.toFixed(1);
+
+            },
+
+            Selectivity(voe_total,adm_total){
+
+              Selectivity = ((adm_total*100)/voe_total) 
+
+            
+
+              return Selectivity.toFixed(1)
 
             }
 
