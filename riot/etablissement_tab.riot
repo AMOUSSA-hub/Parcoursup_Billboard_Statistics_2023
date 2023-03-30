@@ -2,7 +2,7 @@
 
 <div class="box has-background-light has-text-centered">
 <div class="box has-background-light has-text-centered">
- <nav class="level"> <div class="level-left">Moyenne des admis</div><div class="level-right">null</div></nav>
+ <nav class="level"> <div class="level-left">Moyenne des admis</div><div class="level-right">{this.average_form}</div></nav>
  <nav class="level"> <div class="level-left">Nb formations</div><div class="level-right">{this.props.count}</div></nav>
  <nav class="level"> <div class="level-left">capacité</div><div class="level-right">null</div></nav>
   <nav class="level"> <div class="level-left">  Sélectivité (null%)  </div><div class="level-right"><progress class="progress is-warning" value="75" max="100">75%</progress></div></nav>
@@ -60,15 +60,12 @@
     export default {
 
         items : [],
+        average_form:0,
         
         onBeforeUpdate(){
-
-          console.log(this.props)
-
-
-            console.log(this.props.formation)
         
             this.renderTab(this.props.formation)
+            this.Average_form()
            
            
          },
@@ -82,7 +79,7 @@
                 const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows='+this.props.count+'&sort=tri&facet=session&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&refine.fil_lib_voe_acc='+encodeURIComponent(form)+'&timezone=Europe%2FBerlin');
                 const data = await response.json();
                 this.items = data.records.map(elements => elements.fields)
-                console.log(this.items)
+
                 localStorage.setItem(form,JSON.stringify(this.items))
 
               } catch (error) {
@@ -90,7 +87,6 @@
               }
       }else{
         this.items = JSON.parse(localStorage.getItem(form))
-         console.log(this.items.length)
          
         
       }
@@ -107,9 +103,34 @@
 
            
 
-              return average.toFixed(1);
+              return parseFloat(average.toFixed(1)) ;
 
             },
+
+
+            Average_form(){
+
+              total_av= 0
+              
+              for(let i =0 ; i<= this.items.length-1;i++ ){
+                
+                console.log(this.Average(this.items[i].acc_sansmention,this.items[i].acc_ab,this.items[i].acc_b,this.items[i].acc_tb,this.items[i].acc_tbf))
+                a= this.Average(this.items[i].acc_sansmention,this.items[i].acc_ab,this.items[i].acc_b,this.items[i].acc_tb,this.items[i].acc_tbf)
+                
+               total_av = total_av+  a
+                
+
+              }
+
+              console.log(total_av)
+
+            this.average_form =  total_av/this.props.count
+
+            
+             
+
+              
+            }
 
 
 
