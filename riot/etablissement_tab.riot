@@ -4,13 +4,15 @@
 <div class="box has-background-light has-text-centered">
  <nav class="level"> <div class="level-left">Moyenne des admis</div><div class="level-right">{this.average_form}</div></nav>
  <nav class="level"> <div class="level-left">Nb formations</div><div class="level-right">{this.props.count}</div></nav>
- <nav class="level"> <div class="level-left">capacité</div><div class="level-right">null</div></nav>
-  <nav class="level"> <div class="level-left">  Sélectivité (null%)  </div><div class="level-right"><progress class="progress is-warning" value="75" max="100">75%</progress></div></nav>
+ <nav class="level"> <div class="level-left">capacité</div><div class="level-right">{this.capacity}</div></nav>
+  <nav class="level"> <div class="level-left">  Sélectivité ({this.selectivity}%)  </div><div class="level-right"><progress class="progress is-warning" value={this.selectivity} max="100">{this.selectivity}</progress></div></nav>
   
 </div>
 
   <jauge ></jauge><br>
 </div>
+
+<iframe src={this.source_map} width="800" height="600" frameborder="0"></iframe>
 
                 <table class="table cube2" >
                     <thead>
@@ -61,17 +63,25 @@
 
         items : [],
         average_form:0,
+        capacity: 0,
+        selectivity : 0,
+        source_map:"",
         
         onBeforeUpdate(){
         
+          this.source_map = "https://data.enseignementsup-recherche.gouv.fr/explore/embed/dataset/fr-esr-parcoursup/map/?timezone=Europe%2FBerlin&rows=2&sort=tri&refine.fil_lib_voe_acc="+encodeURIComponent(this.props.formation)+"&location=2,19.03276,-21.32469&basemap=e69ab1&static=true&datasetcard=true&scrollWheelZoom=true"
             this.renderTab(this.props.formation)
-            this.Average_form()
+            this.GetAverage()
+            this.GetCapacity()
+            this.GetSelectivity()
            
            
          },
       
 
            async renderTab(form){
+
+            this.items = []
            
 
                  if(!localStorage.getItem(form)){
@@ -84,9 +94,11 @@
 
               } catch (error) {
                 console.error(error);
+                localStorage.clear();
               }
       }else{
         this.items = JSON.parse(localStorage.getItem(form))
+        
          
         
       }
@@ -101,34 +113,73 @@
                  average = ((admis_SM*10)+(admis_AB*12)+(admis_B*14)+(Admis_TB*16)+(admis_F*18))/total
 
 
-           
-
+              
+              if(!isNaN(average) ){
+              
               return parseFloat(average.toFixed(1)) ;
 
+              }
+              else{
+                
+                return 0
+              }
             },
 
 
-            Average_form(){
+            GetAverage(){
 
               total_av= 0
               
               for(let i =0 ; i<= this.items.length-1;i++ ){
                 
                 console.log(this.Average(this.items[i].acc_sansmention,this.items[i].acc_ab,this.items[i].acc_b,this.items[i].acc_tb,this.items[i].acc_tbf))
-                a= this.Average(this.items[i].acc_sansmention,this.items[i].acc_ab,this.items[i].acc_b,this.items[i].acc_tb,this.items[i].acc_tbf)
                 
-               total_av = total_av+  a
+                
+               total_av = total_av+  this.Average(this.items[i].acc_sansmention,this.items[i].acc_ab,this.items[i].acc_b,this.items[i].acc_tb,this.items[i].acc_tbf)
                 
 
               }
 
-              console.log(total_av)
 
-            this.average_form =  total_av/this.props.count
+            this.average_form =  (total_av/this.props.count).toFixed(1)
 
             
              
 
+              
+            },
+
+            GetCapacity(){
+
+                total_cap = 0
+
+                for(let i =0 ; i<= this.items.length-1;i++ ){
+
+                  total_cap =total_cap + this.items[i].capa_fin
+                }
+
+                this.capacity = (total_cap/this.props.count).toFixed(0)
+              
+
+              
+            },
+
+            GetSelectivity(){
+
+                  total_select = 0 ;
+
+                for(let i =0 ; i<= this.items.length-1;i++ ){
+                
+                
+                if(!isNaN(this.items[i].taux_acces_ens)){   
+               total_select = total_select + this.items[i].taux_acces_ens
+                }
+
+              }
+
+              
+
+            this.selectivity =  Math.round((total_select/this.props.count))
               
             }
 
