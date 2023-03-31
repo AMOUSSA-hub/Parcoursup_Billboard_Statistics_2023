@@ -1,21 +1,5 @@
 <etablissement_tab class="zeubi">
 
-    <div id="modal-js-example" class="modal">
-        <div class="modal-background"></div>
-      
-        <div class="modal-content">
-          <div class="box">
-            <p>Modal JS example</p>
-            <!-- Your content -->
-          </div>
-        </div>
-      
-        <button class="modal-close is-large" aria-label="close"></button>
-      </div>
-        <button class="js-modal-trigger" data-target="modal-js-example">
-  Open JS example modal
-</button>
-
 
 <div class="box has-background-light has-text-centered">
 <div class="box has-background-light has-text-centered">
@@ -26,11 +10,14 @@
   
 </div>
 
-  <jauge ></jauge><br>
+
+
+
+  <jauge></jauge><br>
 </div>
-<iframe src={this.source_map} width="800" height="600" frameborder="0"></iframe>
-<div id="map"></div>
-<mymap coordonnee={this.coord}></mymap>
+<iframe src={this.source_map} width="1000" height="600" frameborder="0"></iframe>
+<!---<div id="map"></div>
+<mymap coordonnee={this.coord}></mymap>--> <!-- PAS FINI--->
 
                 <table class="table cube2" >
                     <thead>
@@ -55,12 +42,152 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                <tr class="js-modal-trigger row" data-target="modal-js-example" each={item in this.items}>
+                <tr class="js-modal-trigger row" data-target="modal-js-example" each={item in this.items} >
                   <td>{item.g_ea_lib_vx}  
-                  <button class="js-modal-trigger" data-target="modal-js-example">
-  Open JS example modal
-</button>
-                  
+                  <button class="js-modal-trigger" data-target="modal-js-example" onclick = {() => MakeModal(item) }>+info</button>
+
+<div class="modal " id="modal" onclick={() =>
+   closeMod()}>
+   <div class="modal-background"></div>
+   <div class="modal-content">
+      <div class="box">
+         <div class="columns is-mobile">
+            <div class="column is-two-thirds content mb-0">
+               <p class="has-text-weight-bold">
+                  <a href="https://dossier.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod=13343">
+                  {this.selected_item.g_ea_lib_vx} - {this.selected_item.fili} -{this.selected_item.fil_lib_voe_acc} </a><br><span class="tag is-warning">{GetSelective(this.selected_item.select_form)}</span>
+               </p>
+               <div>
+                  <modal-text title="Ville" >
+                     <p class="my-2">{this.selected_item.ville_etab}</p>
+                  </modal-text>
+               </div>
+               <div>
+                  <modal-text title="Département" >
+                     <p class="my-2">Département : {this.selected_item.dep}</p>
+                  </modal-text>
+               </div>
+               <div>
+                  <modal-text title="Académie" >
+                     <p class="my-2">Académie : {this.selected_item.acad_mies}</p>
+                  </modal-text>
+               </div>
+               <div>
+                  <modal-text title="Contrat établissement" >
+                     <p class="my-2">Contrat établissement : {this.selected_item.contrat_etab}</p>
+                  </modal-text>
+               </div>
+               <div>
+                  <modal-text title="Capacité" >
+                     <p class="my-2">Capacité : {this.selected_item.capa_fin}</p>
+                  </modal-text>
+               </div>
+               <div>
+                  <modal-text title="Nombres de voeux" >
+                     <p class="my-2">Nombres de voeux : {this.selected_item.voe_tot}</p>
+                  </modal-text>
+               </div>
+               <div>
+                  <modal-text title="Admis hors académie">
+                     <p class="my-2">Admis hors académie : {100-this.selected_item.pct_aca_orig} %</p>
+                  </modal-text>
+               </div>
+               <modal-text title="Rang du dernier admis :">
+                  <p class="my-2">Rang du dernier admis : {this.selected_item.ran_grp3}</p>
+               </modal-text>
+               <ul>
+                  <li>Tous sauf les Bac technologiques : null</li>
+                  <li>Bac technologiques toutes séries : null</li>
+               </ul>
+            </div>
+            <div class="column">
+               <p class="has-text-weight-bold"> Vitesse de remplissage</p>
+               <div class="timeline">
+                  <ul>
+                     <li class="timeline_li">
+                        <div>
+                           <p class="timeline_date">null</p>
+                           <span class="timeline_percentage">null</span>
+                        </div>
+                     </li>
+                     <li class="timeline_li">
+                        <div>
+                           <p class="timeline_date">null</p>
+                           <span class="timeline_percentage">null</span>
+                        </div>
+                     </li>
+                     <li class="timeline_li">
+                        <div>
+                           <p class="timeline_date">null</p>
+                           <span class="timeline_percentage">null</span>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <bar-chart label="Répartition par bac">
+            <div class="bar-chart block m-5">
+               <div class="has-text-centered block is-size-5">
+                  <h2 class="is-unselectable">Répartition par bac</h2>
+               </div>
+               <div class="is-size-7">
+                  <div class="columns is-mobile is-vcentered">
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:8%;background-color:#003f5c;">
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     </div>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:17%;background-color:#2f4b7c;">
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     </div>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:67%;background-color:#665191;">
+                        <p class="has-text-centered m-1  is-unselectable">null</p>
+                     </div>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:8%;background-color:#a05195;">
+                        <p class="has-text-centered m-1  is-unselectable">null</p>
+                     </div>
+                  </div>
+                  <div class="columns is-mobile is-justify-content-center">
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Général" style="background-color:#003f5c"></span><span class="is-unselectable">Gen</span></span></div>
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Technologique" style="background-color:#2f4b7c"></span><span class="is-unselectable">Tech</span></span></div>
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Professionnel" style="background-color:#665191"></span><span class="is-unselectable">Pro</span></span></div>
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Autre" style="background-color:#a05195"></span><span class="is-unselectable">Aut</span></span></div>
+                  </div>
+               </div>
+            </div>
+         </bar-chart>
+         <bar-chart label="Répartition par mention au bac">
+            <div class="bar-chart block m-5">
+               <div class="has-text-centered block is-size-5">
+                  <h2 class="is-unselectable">Répartition par mention au bac</h2>
+               </div>
+               <div class="is-size-7">
+                  <div class="columns is-mobile is-vcentered">
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:18%;background-color:#003f5c;">
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     </div>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:9%;background-color:#2f4b7c;">
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     </div>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:36%;background-color:#665191;">
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     </div>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:36%;background-color:#a05195;">
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     </div>
+                  </div>
+                  <div class="columns is-mobile is-justify-content-center">
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Passable" style="background-color:#003f5c"></span><span class="is-unselectable">P</span></span></div>
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Assez Bien" style="background-color:#2f4b7c"></span><span class="is-unselectable">AB</span></span></div>
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Bien" style="background-color:#665191"></span><span class="is-unselectable">B</span></span></div>
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Très Bien" style="background-color:#a05195"></span><span class="is-unselectable">TB</span></span></div>
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Très Bien avec Félicitation du jury" style="background-color:#f95d6a"></span><span class="is-unselectable">TBF</span></span></div>
+                  </div>
+               </div>
+            </div>
+         </bar-chart>
+      </div>
+   </div>
+   <button class="modal-close is-large" aria-label="close"></button>
                   </td>
                   <td>{item.ville_etab}</td>
                   <td>{item.dep}</td>
@@ -71,6 +198,12 @@
 
                 
                 </table>
+
+
+ 
+    
+
+
 
              
 <style>
@@ -111,6 +244,7 @@ background-color:GRAY;
         selectivity : 0,
         source_map:"",
         coord: [],
+        selected_item :[],
 
         
         
@@ -120,7 +254,7 @@ background-color:GRAY;
 
            this.source_map = "https://data.enseignementsup-recherche.gouv.fr/explore/embed/dataset/fr-esr-parcoursup/map/?timezone=Europe%2FBerlin&rows=2&sort=tri&refine.fil_lib_voe_acc="+encodeURIComponent(this.props.libelle)+"&refine.form_lib_voe_acc="+encodeURIComponent(this.props.formation)+"&location=2,19.03276,-21.32469&basemap=e69ab1&static=true&datasetcard=true&scrollWheelZoom=true"
             this.renderTab(this.props.formation,this.props.libelle)
-            // this.GetCoord()
+            //this.GetCoord() --> pas fini 
              this.GetAverage()
              this.GetCapacity()
              this.GetSelectivity()
@@ -139,7 +273,7 @@ background-color:GRAY;
 
                  if(!localStorage.getItem(form+lib)){
               try {
-                const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows='+this.props.count+'&sort=tri&facet=session&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&refine.fil_lib_voe_acc='+encodeURIComponent(lib)+'&refine.form_lib_voe_acc='+encodeURIComponent(form)+'&timezone=Europe%2FBerlin');
+                const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows='+this.props.count+'&sort=tri&facet=session&facet=ran_grp3&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&refine.fil_lib_voe_acc='+encodeURIComponent(lib)+'&refine.form_lib_voe_acc='+encodeURIComponent(form)+'&timezone=Europe%2FBerlin');
                 const data = await response.json();
                 this.items = data.records.map(elements => elements.fields)
                   
@@ -251,7 +385,38 @@ background-color:GRAY;
 
 
 
+            },
+
+            MakeModal(item){
+
+              let modal = document.getElementById("modal");
+              modal.classList.add("is-active");
+              this.selected_item = item
+              this.update()
+            },
+
+            closeMod(){
+              let modal = document.getElementById("modal");
+              modal.classList.remove("is-active");
+            },
+
+            GetSelective( select){
+
+              console.log("s:"+select)
+
+              if(select == "formation sélective"){
+                return "formation sélective"
+              }
+
+              else{
+                return "formation non-sélective"
+              }
+
+
             }
+            
+
+            
 
 
             
@@ -267,54 +432,6 @@ background-color:GRAY;
        
 
 
-
-    
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Functions to open and close a modal
-  function openModal($el) {
-    $el.classList.add('is-active');
-  }
-
-  function closeModal($el) {
-    $el.classList.remove('is-active');
-  }
-
-  function closeAllModals() {
-    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
-      closeModal($modal);
-    });
-  }
-
-  // Add a click event on buttons to open a specific modal
-  (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
-    const modal = $trigger.dataset.target;
-    const $target = document.getElementById(modal);
-
-    $trigger.addEventListener('click', () => {
-      openModal($target);
-    });
-  });
-
-  // Add a click event on various child elements to close the parent modal
-  (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
-    const $target = $close.closest('.modal');
-
-    $close.addEventListener('click', () => {
-      closeModal($target);
-    });
-  });
-
-  // Add a keyboard event to close all modals
-  document.addEventListener('keydown', (event) => {
-    const e = event || window.event;
-
-    if (e.keyCode === 27) { // Escape key
-      closeAllModals();
-    }
-  });
-});
 
     </script>
 

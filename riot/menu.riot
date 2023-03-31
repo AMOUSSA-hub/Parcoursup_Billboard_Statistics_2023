@@ -1,5 +1,7 @@
 <menu class="tst">
 
+
+
 <div class="control has-icons-left has-icons-right boite">
       <div class="columns">
       <input id="input" class="column input is-3-quarter" type="text" placeholder="  Formation" onkeyup={() => search()}><button class="column" disabled ={!back} onclick={() => Back() }  ><</button>
@@ -57,7 +59,7 @@
       last_libelle:"",
       path : [],
     onMounted() {
-      console.log(this.props)
+     
       this.props.UpdatePath(this.path)
       this.Fill_List_With_Form() 
 

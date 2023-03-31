@@ -19,7 +19,7 @@
                 
                 
                 onMounted(){
-                    console.log(this.props)
+                    
                     riot.mount("menu",{UpdatePath:this.UpdatePath,SendForm:this.addTab})
             
                     
@@ -30,7 +30,7 @@
                 UpdatePath(p){
                     this.path = p
                     this.update()
-                    console.log("update chemin")
+                   
 
 
                 },
@@ -39,7 +39,7 @@
                 
                 if(f+l != this.formation+ this.libelle ){
 
-                    console.log("update tab")
+                   
                     this.libelle=l
                     this.formation = f
                     this.count = c
