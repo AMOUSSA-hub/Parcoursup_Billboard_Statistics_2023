@@ -1,0 +1,72 @@
+
+<mymap>
+
+           
+
+        </div>
+
+     <script>
+
+    
+    export default function mymzp() {
+      let map;
+      let cursors = [];
+
+      return {
+        onBeforeMount(){
+            map = L.map('map')
+            map.fitWorld()
+          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+           }).addTo(map);
+      
+          console.log(this.props.coordonnee)
+
+          
+
+
+
+      },
+
+      onUpdated(){
+
+        this.AddMarker(this.props.coordonnee)
+
+
+      },
+
+      AddMarker(loc){
+
+        loc.forEach((coord) =>{
+
+          var marker = L.marker([coord[0],coord[1]]).addTo(map);
+          cursors.push(marker);
+          marker.on('click', () => {
+
+          })
+          marker.popup()
+
+        })
+
+
+      }
+
+
+      
+
+
+
+
+
+
+
+      } 
+    }
+
+   
+  </script>
+
+
+        </mymap>
+

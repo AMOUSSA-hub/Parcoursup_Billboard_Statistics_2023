@@ -2,7 +2,8 @@
 <mypath path={this.path} ></mypath>
  
 <div class="columns">  
-<menu class="column" SendForm={this.addTab} UpdatePath={this.UpdatePath} blabla={blalba} ></menu> <etablissement_tab class="column" if ={this.formation !== ""} formation={this.formation} count={this.count} ></etablissement_tab>
+<menu class="column" SendForm={this.addTab} UpdatePath={this.UpdatePath} blabla={blalba} ></menu> 
+<etablissement_tab class="column" if ={this.formation !== ""} formation={this.formation} libelle={this.libelle} count={this.count} ></etablissement_tab>
  
 </div>
 
@@ -14,6 +15,7 @@
                 path :[],
                 formation: "",
                 count: "",
+                libelle: "",
                 
                 
                 onMounted(){
@@ -28,14 +30,17 @@
                 UpdatePath(p){
                     this.path = p
                     this.update()
+                    console.log("update chemin")
 
 
                 },
 
-             addTab(f, c){
+             addTab(f,l, c){
                 
-                if(f != this.formation){
-               
+                if(f+l != this.formation+ this.libelle ){
+
+                    console.log("update tab")
+                    this.libelle=l
                     this.formation = f
                     this.count = c
                     this.update()

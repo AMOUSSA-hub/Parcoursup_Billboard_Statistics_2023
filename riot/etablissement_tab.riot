@@ -11,8 +11,9 @@
 
   <jauge ></jauge><br>
 </div>
-
 <iframe src={this.source_map} width="800" height="600" frameborder="0"></iframe>
+<div id="map"></div>
+<mymap coordonnee={this.coord}></mymap>
 
                 <table class="table cube2" >
                     <thead>
@@ -66,42 +67,55 @@
         capacity: 0,
         selectivity : 0,
         source_map:"",
+        coord: [],
+
         
-        onBeforeUpdate(){
         
-          this.source_map = "https://data.enseignementsup-recherche.gouv.fr/explore/embed/dataset/fr-esr-parcoursup/map/?timezone=Europe%2FBerlin&rows=2&sort=tri&refine.fil_lib_voe_acc="+encodeURIComponent(this.props.formation)+"&location=2,19.03276,-21.32469&basemap=e69ab1&static=true&datasetcard=true&scrollWheelZoom=true"
-            this.renderTab(this.props.formation)
-            this.GetAverage()
-            this.GetCapacity()
-            this.GetSelectivity()
+
+         onBeforeUpdate(){
+
+
+           this.source_map = "https://data.enseignementsup-recherche.gouv.fr/explore/embed/dataset/fr-esr-parcoursup/map/?timezone=Europe%2FBerlin&rows=2&sort=tri&refine.fil_lib_voe_acc="+encodeURIComponent(this.props.libelle)+"&refine.form_lib_voe_acc="+encodeURIComponent(this.props.formation)+"&location=2,19.03276,-21.32469&basemap=e69ab1&static=true&datasetcard=true&scrollWheelZoom=true"
+            this.renderTab(this.props.formation,this.props.libelle)
+            // this.GetCoord()
+             this.GetAverage()
+             this.GetCapacity()
+             this.GetSelectivity()
+          
            
-           
+            
+
          },
       
 
-           async renderTab(form){
+           async renderTab(form,lib){
 
             this.items = []
-           
 
-                 if(!localStorage.getItem(form)){
+         
+
+                 if(!localStorage.getItem(form+lib)){
               try {
-                const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows='+this.props.count+'&sort=tri&facet=session&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&refine.fil_lib_voe_acc='+encodeURIComponent(form)+'&timezone=Europe%2FBerlin');
+                const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows='+this.props.count+'&sort=tri&facet=session&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&refine.fil_lib_voe_acc='+encodeURIComponent(lib)+'&refine.form_lib_voe_acc='+encodeURIComponent(form)+'&timezone=Europe%2FBerlin');
                 const data = await response.json();
                 this.items = data.records.map(elements => elements.fields)
-
-                localStorage.setItem(form,JSON.stringify(this.items))
+                  
+                localStorage.setItem(form+lib,JSON.stringify(this.items))
+                this.update()
 
               } catch (error) {
                 console.error(error);
                 localStorage.clear();
               }
       }else{
-        this.items = JSON.parse(localStorage.getItem(form))
+
+
+        this.items = JSON.parse(localStorage.getItem(form+lib))
         
          
         
       }
+
    
 
 
@@ -132,7 +146,6 @@
               
               for(let i =0 ; i<= this.items.length-1;i++ ){
                 
-                console.log(this.Average(this.items[i].acc_sansmention,this.items[i].acc_ab,this.items[i].acc_b,this.items[i].acc_tb,this.items[i].acc_tbf))
                 
                 
                total_av = total_av+  this.Average(this.items[i].acc_sansmention,this.items[i].acc_ab,this.items[i].acc_b,this.items[i].acc_tb,this.items[i].acc_tbf)
@@ -181,6 +194,25 @@
 
             this.selectivity =  Math.round((total_select/this.props.count))
               
+            },
+
+
+            GetCoord(){
+
+              for(let i = 0 ; i<= this.items.length-1; i++){
+
+
+                this.coord.push(this.items[i].g_olocalisation_des_formations)
+
+            }
+
+
+
+            }
+
+
+            
+
             }
 
 
@@ -193,7 +225,7 @@
 
 
 
-    }
+    
 
 
 

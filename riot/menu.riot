@@ -17,7 +17,7 @@
   
       <li each={item in items}>
         <div class="columns m-2">
-          <a onclick={deep === 1 ? () => {this.Fill_List_With_Form_detailled(item.name);this.subsrch();} : deep === 2 ? () => {Fill_With_Libelle_form(item.name);this.subsrch();}: deep === 3 ? () => {this.props.SendForm(item.name,item.count);this.addtoPath(item.name,2);this.subsrch(); }: null} class="column">{item.name}</a>
+          <a onclick={deep === 1 ? () => {this.Fill_List_With_Form_detailled(item.name);this.subsrch();} : deep === 2 ? () => {Fill_With_Libelle_form(item.name);this.subsrch();}: deep === 3 ? () => {this.props.SendForm(this.last_libelle,item.name,item.count);this.addtoPath(item.name,2);this.subsrch(); }: null} class="column">{item.name}</a>
           <span class="button is-primary ">{item.count}</span>
         </div>
       </li>
