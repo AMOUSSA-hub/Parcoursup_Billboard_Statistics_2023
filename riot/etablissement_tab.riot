@@ -1,4 +1,4 @@
-<etablissement_tab class="zeubi">
+<etablissement_tab class="objet">
 
 
 <div class="box has-background-light has-text-centered">
@@ -12,9 +12,10 @@
 
 
 
-
-  <jauge></jauge><br>
+  
 </div>
+
+
 <iframe src={this.source_map} width="1000" height="600" frameborder="0"></iframe>
 <!---<div id="map"></div>
 <mymap coordonnee={this.coord}></mymap>--> <!-- PAS FINI--->
@@ -54,8 +55,8 @@
          <div class="columns is-mobile">
             <div class="column is-two-thirds content mb-0">
                <p class="has-text-weight-bold">
-                  <a href="https://dossier.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod=13343">
-                  {this.selected_item.g_ea_lib_vx} - {this.selected_item.fili} -{this.selected_item.fil_lib_voe_acc} </a><br><span class="tag is-warning">{GetSelective(this.selected_item.select_form)}</span>
+                  <a>
+                  {this.selected_item.g_ea_lib_vx} - {this.selected_item.form_lib_voe_acc} -{this.selected_item.fil_lib_voe_acc} </a><br><span class="tag is-warning">{GetSelective(this.selected_item.select_form)}</span>
                </p>
                <div>
                   <modal-text title="Ville" >
@@ -93,11 +94,11 @@
                   </modal-text>
                </div>
                <modal-text title="Rang du dernier admis :">
-                  <p class="my-2">Rang du dernier admis : {this.selected_item.ran_grp3}</p>
+                  <p class="my-2">Rang du dernier admis : </p>
                </modal-text>
                <ul>
-                  <li>Tous sauf les Bac technologiques : null</li>
-                  <li>Bac technologiques toutes séries : null</li>
+                  <li>Tous sauf les Bac technologiques : {this.selected_item.ran_grp1}</li>
+                  <li>Bac technologiques toutes séries : {this.selected_item.ran_grp2}</li>
                </ul>
             </div>
             <div class="column">
@@ -106,26 +107,49 @@
                   <ul>
                      <li class="timeline_li">
                         <div>
-                           <p class="timeline_date">null</p>
-                           <span class="timeline_percentage">null</span>
+                           <p class="timeline_date">Ouverture 27 mai</p>
+                           <span class="timeline_percentage">{this.selected_item.pct_acc_debutpp}%</span>
                         </div>
                      </li>
                      <li class="timeline_li">
                         <div>
-                           <p class="timeline_date">null</p>
-                           <span class="timeline_percentage">null</span>
+                           <p class="timeline_date">17 juin</p>
+                           <span class="timeline_percentage">{this.selected_item.pct_acc_datebac}%</span>
                         </div>
                      </li>
                      <li class="timeline_li">
                         <div>
-                           <p class="timeline_date">null</p>
-                           <span class="timeline_percentage">null</span>
+                           <p class="timeline_date">16 juillet</p>
+                           <span class="timeline_percentage">{this.selected_item.pct_acc_finpp}%</span>
                         </div>
                      </li>
                   </ul>
                </div>
             </div>
          </div>
+          <bar-chart label="Répartition par genre">
+            <div class="bar-chart block m-5">
+               <div class="has-text-centered block is-size-5">
+                  <h2 class="is-unselectable">Répartition par genre</h2>
+               </div>
+               <div class="is-size-7">
+                  <div class="columns is-mobile is-vcentered">
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{100 -this.selected_item.pct_f}%;background-color:#003f5c;">
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">{100 -this.selected_item.pct_f} %</p>
+                     </div>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{this.selected_item.pct_f}%;background-color:#2f4b7c;">
+                        <p class="has-text-centered m-1 has-text-white is-unselectable"> {this.selected_item.pct_f} %</p>
+                     </div>
+                     
+                     </div>
+                  </div>
+                  <div class="columns is-mobile is-justify-content-center">
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Général" style="background-color:#003f5c"></span><span class="is-unselectable">H</span></span></div>
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Technologique" style="background-color:#2f4b7c"></span><span class="is-unselectable">F</span></span></div>
+                  </div>
+               </div>
+            </div>
+         </bar-chart>
          <bar-chart label="Répartition par bac">
             <div class="bar-chart block m-5">
                <div class="has-text-centered block is-size-5">
@@ -133,17 +157,17 @@
                </div>
                <div class="is-size-7">
                   <div class="columns is-mobile is-vcentered">
-                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:8%;background-color:#003f5c;">
-                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{this.selected_item.pct_bg}%;background-color:#003f5c;" if='{this.selected_item.pct_bg != 0}'>
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">{this.selected_item.pct_bg}%</p>
                      </div>
-                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:17%;background-color:#2f4b7c;">
-                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{this.selected_item.pct_bt}%;background-color:#2f4b7c;"if='{this.selected_item.pct_bt != 0}'>
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">{this.selected_item.pct_bt}%</p>
                      </div>
-                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:67%;background-color:#665191;">
-                        <p class="has-text-centered m-1  is-unselectable">null</p>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{this.selected_item.pct_bp}%;background-color:#665191;"if='{this.selected_item.pct_bp != 0}'>
+                        <p class="has-text-centered m-1  is-unselectable">{this.selected_item.pct_bp}%</p>
                      </div>
-                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:8%;background-color:#a05195;">
-                        <p class="has-text-centered m-1  is-unselectable">null</p>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{100-this.selected_item.pct_bg-this.selected_item.pct_bt-this.selected_item.pct_bp}%;background-color:#a05195;"if='{100-this.selected_item.pct_bg-this.selected_item.pct_bt-this.selected_item.pct_bp != 0}'>
+                        <p class="has-text-centered m-1  is-unselectable">{100-this.selected_item.pct_bg-this.selected_item.pct_bt-this.selected_item.pct_bp}%</p>
                      </div>
                   </div>
                   <div class="columns is-mobile is-justify-content-center">
@@ -162,21 +186,24 @@
                </div>
                <div class="is-size-7">
                   <div class="columns is-mobile is-vcentered">
-                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:18%;background-color:#003f5c;">
-                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{this.selected_item.pct_sansmention}%;background-color:#003f5c;" if='{this.selected_item.pct_sansmention != 0}'>
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">{this.selected_item.pct_sansmention}%</p>
                      </div>
-                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:9%;background-color:#2f4b7c;">
-                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{this.selected_item.pct_ab}%;background-color:#2f4b7c;" if='{this.selected_item.pct_ab != 0}'>
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">{this.selected_item.pct_ab}%</p>
                      </div>
-                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:36%;background-color:#665191;">
-                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{this.selected_item.pct_b}%;background-color:#665191;"if='{this.selected_item.pct_b != 0}'>
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">{this.selected_item.pct_b}%</p>
                      </div>
-                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:36%;background-color:#a05195;">
-                        <p class="has-text-centered m-1 has-text-white is-unselectable">null</p>
+                     <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{this.selected_item.pct_tb}%;background-color:#a05195;"if='{this.selected_item.pct_tb != 0}'>
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">{this.selected_item.pct_tb}%</p>
+                     </div>
+                      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{this.selected_item.pct_tbf}%;background-color:#f95d6a;" if='{this.selected_item.pct_tbf != 0}'>
+                        <p class="has-text-centered m-1 has-text-white is-unselectable">{this.selected_item.pct_tbf}%</p>
                      </div>
                   </div>
                   <div class="columns is-mobile is-justify-content-center">
-                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Passable" style="background-color:#003f5c"></span><span class="is-unselectable">P</span></span></div>
+                     <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Passable" style="background-color:#003f5c"></span><span class="is-unselectable">SM</span></span></div>
                      <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Assez Bien" style="background-color:#2f4b7c"></span><span class="is-unselectable">AB</span></span></div>
                      <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Bien" style="background-color:#665191"></span><span class="is-unselectable">B</span></span></div>
                      <div class="column is-narrow"><span class="icon-text"><span class="icon" title="Très Bien" style="background-color:#a05195"></span><span class="is-unselectable">TB</span></span></div>
@@ -187,10 +214,11 @@
          </bar-chart>
       </div>
    </div>
-   <button class="modal-close is-large" aria-label="close"></button>
+  
+  
                   </td>
                   <td>{item.ville_etab}</td>
-                  <td>{item.dep}</td>
+                  <td>{item.dep}</td> 
                   <td>{ Average(item.acc_sansmention,item.acc_ab,item.acc_b,item.acc_tb,item.acc_tbf)}</td>
                   <td class="tst">{item.taux_acces_ens}%<progress class="progress is-warning" value={item.taux_acces_ens} max="100">{item.taux_acces_ens}</progress></td>
                 </tr>
@@ -220,7 +248,7 @@
     height: calc(100vh - 420px);
     overflow-y: auto;
 }
-.zeubi{
+.objet{
   line-height:0;
   padding:0;
 }
@@ -276,7 +304,7 @@ background-color:GRAY;
                 const response = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows='+this.props.count+'&sort=tri&facet=session&facet=ran_grp3&facet=contrat_etab&facet=cod_uai&facet=g_ea_lib_vx&facet=dep_lib&facet=region_etab_aff&facet=acad_mies&facet=ville_etab&facet=lib_for_voe_ins&facet=select_form&facet=fili&facet=form_lib_voe_acc&facet=fil_lib_voe_acc&facet=detail_forma&facet=tri&facet=cod_aff_form&facet=etablissement_id_paysage&facet=composante_id_paysage&refine.fil_lib_voe_acc='+encodeURIComponent(lib)+'&refine.form_lib_voe_acc='+encodeURIComponent(form)+'&timezone=Europe%2FBerlin');
                 const data = await response.json();
                 this.items = data.records.map(elements => elements.fields)
-                  
+                  console.log("pas de cache")
                 localStorage.setItem(form+lib,JSON.stringify(this.items))
                 this.update()
 
@@ -286,8 +314,10 @@ background-color:GRAY;
               }
       }else{
 
-
+         console.log(" cache")
         this.items = JSON.parse(localStorage.getItem(form+lib))
+        
+        
         
          
         
@@ -301,6 +331,7 @@ background-color:GRAY;
             Average(admis_SM,admis_AB,admis_B,Admis_TB,admis_F){
 
                  total = admis_SM+admis_AB+admis_B+Admis_TB+admis_F
+                
                  average = ((admis_SM*10)+(admis_AB*12)+(admis_B*14)+(Admis_TB*16)+(admis_F*18))/total
 
 
@@ -320,18 +351,23 @@ background-color:GRAY;
             GetAverage(){
 
               total_av= 0
+              none_average= 0 
               
               for(let i =0 ; i<= this.items.length-1;i++ ){
                 
                 
-                
+                if(this.Average(this.items[i].acc_sansmention,this.items[i].acc_ab,this.items[i].acc_b,this.items[i].acc_tb,this.items[i].acc_tbf) != 0){
+
                total_av = total_av+  this.Average(this.items[i].acc_sansmention,this.items[i].acc_ab,this.items[i].acc_b,this.items[i].acc_tb,this.items[i].acc_tbf)
-                
+                }
+                else{
+                  none_average++
+                }
 
               }
 
 
-            this.average_form =  (total_av/this.props.count).toFixed(1)
+            this.average_form =  (total_av/(this.props.count-none_average)).toFixed(1)
 
             
              
@@ -402,7 +438,7 @@ background-color:GRAY;
 
             GetSelective( select){
 
-              console.log("s:"+select)
+              
 
               if(select == "formation sélective"){
                 return "formation sélective"
@@ -413,6 +449,10 @@ background-color:GRAY;
               }
 
 
+            },
+
+            GetLinkEtab(num_etab){
+               return'https://dossier.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod='+num_etab
             }
             
 
