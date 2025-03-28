@@ -2,19 +2,4 @@
 
 #map { height: 180px; }
 
-/* Thème clair (par défaut) */
-body {
-    background-color: white;
-    color: black;
-}
-
-/* Thème sombre */
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: black;
-        color: white;
-    }
-}
-
-
 
